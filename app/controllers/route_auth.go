@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"go-todo-sample/app/models"
+	"go-todo-sample/app/services"
 	"log"
 	"net/http"
 )
@@ -24,6 +25,19 @@ func singup(w http.ResponseWriter, r *http.Request) {
 			Name: r.PostFormValue("name"),
 			Email: r.PostFormValue("email"),
 			PassWord: r.PostFormValue("password"),
+		}
+
+		if err := services.CheckUser(user, models.Db); err != nil {
+			errorMessage := err.Error()
+			// エラーメッセージをテンプレートに渡して表示
+			data := struct {
+				ErrorMessage string
+			}{
+				ErrorMessage: errorMessage,
+			}
+
+			generateHTML(w, data, "layout", "public_navbar", "signup")
+			return
 		}
 		if err := user.CreateUser(); err != nil {log.Fatalln(err)}
 

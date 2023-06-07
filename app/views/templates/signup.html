@@ -1,4 +1,7 @@
 {{define "content" }}
+{{if .ErrorMessage}}
+<div class="error-message" style="color: red;">{{.ErrorMessage}}</div>
+{{end}}
 <h1 class="text-center">signup</h1>
  
  
