@@ -34,11 +34,11 @@ func CheckUser(user models.User, db *sql.DB) error {
 	// PassWord
 	if len(user.PassWord) < 6 { return errors.New("パスワードは6文字以上で入力してください") }
 
-	cmdExtractPassWord := `SELECT COUNT(*) FROM users WHERE email = ?`
+	cmdExtractPassWord := `SELECT COUNT(*) FROM users WHERE password = ?`
 	var passwordCount int
 	passwordExtractingErr := db.QueryRow(cmdExtractPassWord, user.PassWord).Scan(&passwordCount)
 	if passwordExtractingErr != nil { return passwordExtractingErr }
-	if passwordCount > 0 { return errors.New("既に存在するメールアドレスです") }
+	if passwordCount > 0 { return errors.New("既に存在するパスワードです") }
 
 	return nil
 }
