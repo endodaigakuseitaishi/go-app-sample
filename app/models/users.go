@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"log"
 	"time"
 )
@@ -33,7 +32,6 @@ func (u *User) CreateUser() (err error) {
 		password,
 		created_at) values (?, ?, ?, ?, ?)`
 
-		fmt.Println(cmd)
 	_, err = Db.Exec(cmd,
 		createUUID(),
 		u.Name,
